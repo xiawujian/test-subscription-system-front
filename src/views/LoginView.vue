@@ -9,7 +9,7 @@
         <el-input v-model="form.password"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">登录</el-button>
+        <el-button type="primary" @click="login">登录</el-button>
         <el-button>取消</el-button>
       </el-form-item>
     </el-form>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import axios from "@/axios/axios";
 export default {
   name: "LoginView",
   data() {
@@ -28,8 +29,25 @@ export default {
     };
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
+    login: function () {
+      if (this.$root.loginStatus.login) {
+        this.$message.error("已登录，如需更换账号请先登出")
+      } else {
+        axios.post("/accounts/login", this.loginInfo)
+            .then((response) => {
+              this.$message({
+                message: "登录成功",
+                type: "success"
+              })
+              this.$root.loginStatus.login = true
+              this.$root.loginStatus.userid = response.data
+              this.$root.loginStatus.username = this.loginInfo.username
+              this.$router.push("/home")
+            })
+            .catch((error) => {
+              this.$message.error(error.response.data)
+            })
+      }
     }
   }
 }

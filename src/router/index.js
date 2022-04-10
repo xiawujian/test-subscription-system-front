@@ -2,6 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import LoginView from "@/views/LoginView";
 import RegisterView from "@/views/RegisterView";
+import HomeView from "@/views/HomeView";
+import UserProfileView from "@/views/UserProfileView";
+import ShoppingCartView from "@/views/ShoppingCartView";
 
 Vue.use(VueRouter)
 export  default  new VueRouter({
@@ -15,6 +18,23 @@ export  default  new VueRouter({
             path:'/register',
             name:'register',
             component:RegisterView
+        },
+        {
+            path:'/home',
+            name:'home',
+            component:HomeView,
+            children:[
+                {
+                    path:'',
+                    name:'home',
+                    component:UserProfileView
+                },
+                {
+                    path:'cart',
+                    name:'cart',
+                    component:ShoppingCartView
+                }
+            ]
         }
     ]
 })

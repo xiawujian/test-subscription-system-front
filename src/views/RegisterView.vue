@@ -55,8 +55,6 @@ export default {
       ruleForm: {
         name: '',
         number: '',
-        institute: '',
-        major: '',
         pass: '',
         checkPass: ''
       },
@@ -67,31 +65,11 @@ export default {
             message: '请输入您的姓名',
             trigger: 'blur'
           },
-          {
-            min: 3,
-            max: 5,
-            message: '长度在 2 到 5 个字符',
-            trigger: 'blur'
-          }
         ],
         number: [
           {
             required: true,
             message: '请输入您的学号',
-          }
-        ],
-        institute: [
-          {
-            required: true,
-            message: '请选择您的学院',
-            trigger: 'change'
-          }
-        ],
-        major: [
-          {
-            required: true,
-            message: '请选择您的专业',
-            trigger: 'change'
           }
         ],
         pass: [
