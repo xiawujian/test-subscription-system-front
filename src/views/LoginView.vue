@@ -1,16 +1,16 @@
 <template>
-  <div class="login-container" >
-    <el-form ref="form" :model="form" label-width="80px" class="login-form">
-      <h2 class="login-title">高校教材征订系统</h2>
-      <el-form-item label="学号">
-        <el-input v-model="form.number"></el-input>
+  <div class="login-container">
+    <el-form ref="form" :model="loginForm" label-width="80px" class="login-form">
+      <h2 class="login-title" style="text-align: center">高校教材征订系统</h2>
+      <el-form-item label="用户名" style="width: 100%">
+        <el-input v-model="loginForm.username"></el-input>
       </el-form-item>
-      <el-form-item label="密码">
-        <el-input v-model="form.password"></el-input>
+      <el-form-item label="密码" prop="password" style="width: 100%">
+        <el-input type="password" v-model="loginForm.password"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="login">登录</el-button>
-        <el-button>取消</el-button>
+        <el-button @click="register">注册</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -18,12 +18,13 @@
 
 <script>
 import axios from "@/axios/axios";
+
 export default {
   name: "LoginView",
   data() {
     return {
-      form: {
-        number: "",
+      loginForm: {
+        username:"",
         password: ""
       }
     };
@@ -33,21 +34,22 @@ export default {
       if (this.$root.loginStatus.login) {
         this.$message.error("已登录，如需更换账号请先登出")
       } else {
-        axios.post("/accounts/login", this.loginInfo)
+        axios.post("/account/login", this.loginForm)
             .then((response) => {
-              this.$message({
-                message: "登录成功",
-                type: "success"
-              })
+              this.$message.success("登录成功")
               this.$root.loginStatus.login = true
               this.$root.loginStatus.userid = response.data
-              this.$root.loginStatus.username = this.loginInfo.username
+              this.$root.loginStatus.username = this.loginForm.username
+              console.log(response)
               this.$router.push("/home")
             })
             .catch((error) => {
               this.$message.error(error.response.data)
             })
       }
+    },
+    register:function (){
+      this.$router.push("/register")
     }
   }
 }
@@ -62,14 +64,14 @@ export default {
   border-radius: 20px; /* 圆角 */
 }
 
-/* 背景 */
+ 背景
 .login-container {
   position: absolute;
   width: 100%;
   height: 100%;
 }
 
-/* 标题 */
+ 标题
 .login-title {
   color: #303133;
   text-align: center;

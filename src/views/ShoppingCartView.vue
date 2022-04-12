@@ -10,8 +10,8 @@
         :summary-method="getSummaries"
         @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" min-width="8.5%"> </el-table-column>
-      <el-table-column label="商品预览" min-width="10.5%">
+      <el-table-column type="selection" min-width="8.5%"></el-table-column>
+      <el-table-column label="课本名称" min-width="10.5%">
         <template #default="scope">{{ scope.row.date }}</template>
       </el-table-column>
       <el-table-column
@@ -50,56 +50,34 @@ export default {
   name: "ShoppingCartView",
   data: function () {
     return {
-      totalPrice:0,
-      selNum:0,
+      totalPrice: 0,
+      selNum: 0,
       tableData: [
         {
-          id:1,
+          id: 1,
           date: '1',
-          price: '1',
+          price: 1,
           num: '1',
-          selected:true
+          selected: 0
         },
         {
-          id:2,
+          id: 2,
           date: '1',
-          price: '1',
+          price: 1,
           num: '1',
-          selected:true
+          selected: 0
         },
         {
-          id:3,
+          id: 3,
           date: '1',
-          price: '1',
+          price: 1,
           num: '1',
-          selected:true
+          selected: 0
         },
       ],
     };
   },
-  // watch: {
-  //   tableData: function () {
-  //     let _this = this;
-  //     this.$nextTick(() => {
-  //       // debugger;
-  //       console.log(_this.$refs.multipleTable.$refs);
-  //       let html = _this.$refs.multipleTable.$refs.footerWrapper
-  //           .querySelector(".el-table__footer")
-  //           .querySelectorAll("td")[6]
-  //           .querySelector(".cell");
-  //       html.innerHTML = `   <button
-  //           type="button"
-  //           class="el-button el-button--default el-button--mini cart-btn"
-  //           style="color: #fff; background: #f56c6c;width:120px;height:50px;font-size:20px"
-  //         >
-  //         <span>结算</span>
-  //         </button>`;
-  //       html.onclick = function () {
-  //         console.log("点击", _this.totalPrice)
-  //       }
-  //     });
-  //   },
-  // },
+  watch: {},
   methods: {
     handleSelectionChange(val) {
       const ids = [];
@@ -133,10 +111,10 @@ export default {
           sums[index] = "合计";
           return;
         }
-        if (index === 4) {
+        if (index === 3) {
           sums[index] = "已选中商品" + this.selNum + "件";
         }
-        if (index === 5) {
+        if (index === 4) {
           sums[index] = this.totalPrice + "元";
           return;
         }
