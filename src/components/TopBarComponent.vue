@@ -1,37 +1,61 @@
 <template>
-  <div>
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" style="text-align: right">
-      <el-menu-item index="1">处理中心</el-menu-item>
-      <el-submenu index="2">
-        <template slot="title">我的工作台</template>
-        <el-menu-item index="2-1">选项1</el-menu-item>
-        <el-menu-item index="2-2">选项2</el-menu-item>
-        <el-menu-item index="2-3">选项3</el-menu-item>
-        <el-submenu index="2-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="2-4-1">选项1</el-menu-item>
-          <el-menu-item index="2-4-2">选项2</el-menu-item>
-          <el-menu-item index="2-4-3">选项3</el-menu-item>
+  <div style="height: 100%;width:100%">
+    <el-row type="flex" justify="end" align="middle">
+      <el-menu :default-active="activeIndex" mode="horizontal" style="width: 100%">
+        <el-submenu index="1" style="float: right" @command="handleCommand">
+          <template slot="title">你好！{{ username }}</template>
+          <el-menu-item v-on:click="logout">退出登录</el-menu-item>
         </el-submenu>
-      </el-submenu>
-      <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
-    </el-menu>
+      </el-menu>
+      <!--      <el-dropdown @command="handleCommand">-->
+      <!--        <el-button type="text">你好！{{ username }}</el-button>-->
+      <!--        <template #dropdown>-->
+      <!--          <el-dropdown-menu style="text-align: center">-->
+      <!--            <template slot="title">你好！{{username}}</template>-->
+      <!--            <el-dropdown-item command="logout">退出登录</el-dropdown-item>-->
+      <!--          </el-dropdown-menu>-->
+      <!--        </template>-->
+      <!--      </el-dropdown>-->
+    </el-row>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "TopBarComponent",
   data() {
     return {
-      activeIndex: '1',
-      activeIndex2: '1'
-    };
+      activeIndex: 1
+    }
+  },
+  computed: {
+    username: function () {
+      return this.$root.loginStatus.username
+    }
   },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    }
+    logout: function () {
+      axios.post("/account/logout")
+          .then(() => {
+            this.$message.success("退出成功");
+            this.$root.loginStatus.login = false
+            this.$root.loginStatus.userid = null
+            this.$root.loginStatus.username = null
+            this.$router.push("/")
+          })
+          .catch((error) => {
+            this.$message.error(error.response.data)
+          })
+    },
+    handleCommand: function (command) {
+      switch (command) {
+        case "logout":
+          this.logout();
+          break;
+      }
+    },
   }
 }
 </script>

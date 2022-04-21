@@ -4,7 +4,7 @@
       <el-aside width="auto">
         <side-bar-component></side-bar-component>
       </el-aside>
-      <el-container>
+      <el-container style="background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
         <el-header height="50px">
           <top-bar-component></top-bar-component>
         </el-header>

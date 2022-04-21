@@ -38,9 +38,8 @@ export default {
             .then((response) => {
               this.$message.success("登录成功")
               this.$root.loginStatus.login = true
-              this.$root.loginStatus.userid = response.data
+              this.$root.loginStatus.userid = response.data.id
               this.$root.loginStatus.username = this.loginForm.username
-              console.log(response)
               this.$router.push("/home")
             })
             .catch((error) => {

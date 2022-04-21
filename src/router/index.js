@@ -6,6 +6,7 @@ import HomeView from "@/views/HomeView";
 import UserProfileView from "@/views/UserProfileView";
 import ShoppingCartView from "@/views/ShoppingCartView";
 import TextbookShowView from "@/views/TextbookShowView";
+import UserHomeView from "@/views/UserHomeView";
 
 Vue.use(VueRouter)
 export default new VueRouter({
@@ -28,7 +29,7 @@ export default new VueRouter({
                 {
                     path: '',
                     name: 'home',
-                    component: UserProfileView
+                    component: UserHomeView
                 },
                 {
                     path: 'cart',
