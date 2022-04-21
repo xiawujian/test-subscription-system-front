@@ -23,12 +23,11 @@ export default new VueRouter({
         },
         {
             path: '/home',
-            name: 'home',
             component: HomeView,
             children: [
                 {
                     path: '',
-                    name: 'home',
+                    name: 'user',
                     component: UserHomeView
                 },
                 {

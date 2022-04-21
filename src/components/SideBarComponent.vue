@@ -5,7 +5,7 @@
         <el-menu-item v-on:click="goto('/home')">
           <template slot="title"><i class="el-icon-user"></i>主页</template>
         </el-menu-item>
-        <el-submenu>
+        <el-submenu index="1">
           <template slot="title"><i class="el-icon-notebook-1"></i>教材征订</template>
           <el-menu-item v-on:click="goto('/home/textbook')">购买教材</el-menu-item>
           <el-menu-item v-on:click="goto('/home/cart')">购物车</el-menu-item>

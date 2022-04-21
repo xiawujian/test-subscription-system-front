@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100%;width:100%">
     <el-row type="flex" justify="end" align="middle">
-      <el-menu :default-active="activeIndex" mode="horizontal" style="width: 100%">
+      <el-menu mode="horizontal" style="width: 100%">
         <el-submenu index="1" style="float: right" @command="handleCommand">
           <template slot="title">你好！{{ username }}</template>
           <el-menu-item v-on:click="logout">退出登录</el-menu-item>

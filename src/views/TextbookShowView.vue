@@ -2,17 +2,18 @@
   <div>
     <el-card>
       <template #header>
-        <el-input clearable style="width: 250px" maxlength="40">
+        <el-input v-model="searchInfo" placeholder="请输入教材名称" clearable style="width: 250px" maxlength="40">
           <template #prefix>
-            &nbsp;<font-awesome-icon icon="fa-solid fa-magnifying-glass"></font-awesome-icon>
           </template>
         </el-input>
+        <el-button type="primary" plain size="medium"  style="margin-left: 2%">
+          搜索
+        </el-button>
       </template>
       <el-table
           border
           show-header
           v-el-table-infinite-scroll="load"
-          v-el-table-infinite-scroll-immediate="false"
           :data="tableData"
       >
         <el-table-column prop="name" label="课本名称" min-width="10.5%">
@@ -52,7 +53,8 @@ export default {
   },
   data: function () {
     return {
-      tableData: exampleData
+      tableData: exampleData,
+      searchInfo:""
     };
   },
   methods: {

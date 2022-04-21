@@ -1,7 +1,8 @@
 import Vue from "vue";
 import axios from "axios";
 
-Vue.use(axios);
+// Vue.use(axios);
+Vue.prototype.axios=axios
 axios.defaults.baseURL = 'http://localhost:8088';
 axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.withCredentials = true;
