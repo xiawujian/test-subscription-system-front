@@ -40,6 +40,7 @@ export default {
               this.$root.loginStatus.login = true
               this.$root.loginStatus.userid = response.data.id
               this.$root.loginStatus.username = this.loginForm.username
+              this.$root.loginStatus.role= response.data.role
               this.$router.push("/home")
             })
             .catch((error) => {

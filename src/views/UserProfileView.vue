@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card>
-      <el-descriptions class="margin-top" title="用户个人信息" :column="3" :size="size" border>
+      <el-descriptions class="margin-top" title="用户个人信息" :column="3" border>
         <template slot="extra">
           <el-button type="primary" size="small">操作</el-button>
         </template>
@@ -10,7 +10,7 @@
             <i class="el-icon-user"></i>
             用户名
           </template>
-          kooriookami
+          {{userInf.username}}
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
@@ -48,13 +48,33 @@
 <script>
 // import axios from "axios";
 
+import axios from "@/axios/axios";
+
 export default {
   name: "UserProfileView",
   data() {
-      return{
-        size: ''
-      }
+    return {
+      userInf: {
+        username: ''
+      },
+    }
   },
+  methods: {
+    userInfo: function () {
+      axios.post("/account/info", {
+        id: this.$root.loginStatus.userid
+        }).then((response) => {
+            // this.$message.success("查找成功")
+            this.userInf.username = response.data.username;
+          })
+          .catch((error) => {
+            this.$message.error(error.response.data)
+          })
+    }
+  },
+  mounted() {
+    this.userInfo();
+  }
 }
 </script>
 
