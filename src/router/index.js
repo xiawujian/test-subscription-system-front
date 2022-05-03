@@ -64,6 +64,9 @@ router.beforeEach((to, from, next) => {
             } else {
                 if (to.path === "/" || to.path === "/login" || to.path === "/register" || to.path === "/home") {
                     next();
+                }else {
+                    router.app.$message.error("请先登录后查看")
+                    next(false)
                 }
             }
         })

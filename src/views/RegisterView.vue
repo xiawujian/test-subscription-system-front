@@ -5,20 +5,11 @@
         <el-form-item label="姓名" prop="username" style="width: 35%;text-align: center">
           <el-input v-model="registerForm.username"></el-input>
         </el-form-item>
-        <!--        <el-form-item label="学号" prop="id" style="width: 50%">-->
-        <!--          <el-input v-model="registerForm.id"></el-input>-->
-        <!--        </el-form-item>-->
-        <!--      <el-form-item label="学院" prop="institute">-->
-        <!--        <el-select v-model="ruleForm.institute" placeholder="请选择您的学院">-->
-        <!--          <el-option label="区域一" value="shanghai"></el-option>-->
-        <!--          <el-option label="区域二" value="beijing"></el-option>-->
-        <!--        </el-select>-->
-        <!--      </el-form-item>-->
-        <!--      <el-form-item label="专业" prop="major" >-->
-        <!--        <el-select v-model="ruleForm.major" placeholder="请选择您的专业" >-->
-        <!--          <el-option v-for="maj in this.numbers" v-bind:key="maj" :label="maj" :value="maj"></el-option>-->
-        <!--        </el-select>-->
-        <!--      </el-form-item>-->
+<!--        <el-form-item label="专业" prop="major">-->
+<!--          <el-select v-model="registerForm.major" placeholder="请选择您的专业">-->
+<!--            <el-option v-for="maj in this.numbers" v-bind:key="maj" :label="maj" :value="maj"></el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
         <el-form-item label="密码" prop="password" style="width: 50%;text-align: center">
           <el-input type="password" v-model="registerForm.password" autocomplete="off"></el-input>
         </el-form-item>
@@ -26,8 +17,8 @@
           <el-input type="password" v-model="registerForm.checkPass" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" size="medium"  @click="submit">注册</el-button>
-          <el-button size="medium"  v-on:click="goto('/')">返回</el-button>
+          <el-button type="primary" size="medium" @click="submit">注册</el-button>
+          <el-button size="medium" v-on:click="goto('/')">返回</el-button>
         </el-form-item>
       </el-form>
     </el-card>

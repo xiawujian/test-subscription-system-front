@@ -13,7 +13,7 @@ new Vue({
       login: null,
       userid: null,
       username: null,
-      role: null
+      // role: null
     }
   },
   router,
