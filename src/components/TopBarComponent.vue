@@ -41,7 +41,7 @@ export default {
           .then(() => {
             this.$message.success("退出成功");
             this.$root.loginStatus.login = false
-            this.$root.loginStatus.userid = null
+            this.$root.loginStatus.userId = null
             this.$root.loginStatus.username = null
             this.$router.push("/")
           })

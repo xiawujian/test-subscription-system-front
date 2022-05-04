@@ -1,95 +1,143 @@
 <template>
   <div>
-    <el-table
-        show-summary
-        class="table"
-        ref="multipleTable"
-        :data="tableData"
-        tooltip-effect="dark"
-        style="width: 100%"
-        :summary-method="getSummaries"
-        @selection-change="handleSelectionChange"
-    >
-      <el-table-column type="selection" min-width="8.5%"></el-table-column>
-      <el-table-column label="课本名称" min-width="10.5%">
-        <template #default="scope">{{ scope.row.date }}</template>
-      </el-table-column>
-      <el-table-column
-          prop="name"
-          label="商品信息"
-          min-width="27%"
-          show-overflow-tooltip
+    <el-card>
+      <template #header>
+        <el-input v-model="key" placeholder="请输入教材名称" clearable style="width: 250px" maxlength="40" @input="search">
+          <template #prefix>
+          </template>
+        </el-input>
+        <el-button type="primary" style="margin-left: 2%" @click="buy">结算</el-button>
+      </template>
+      <el-table
+          show-summary
+          class="table"
+          ref="multipleTable"
+          :data="shoppingCartEntries"
+          tooltip-effect="dark"
+          style="width: 100%"
+          :summary-method="getSummaries"
+          @selection-change="handleSelectionChange"
       >
-      </el-table-column>
-      <el-table-column prop="price" label="单价" min-width="8%">
-        <template #default="scope">
-          {{ scope.row.price.toFixed(2) }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="num" label="数量" min-width="12%">
-        <template #default="scope">
-          <el-input-number
-              size="mini"
-              v-model="scope.row.num"
-              :min="1"
-              label="描述文字"
-          ></el-input-number>
-        </template>
-      </el-table-column>
-      <el-table-column label="金额" min-width="11%">
-        <template #default="scope">
-          {{ (scope.row.price * scope.row.num).toFixed(2) }}
-        </template>
-      </el-table-column>
-    </el-table>
+        <el-table-column type="selection" min-width="8.5%"></el-table-column>
+        <el-table-column label="课本名称" min-width="10.5%">
+          <template #default="scope">{{ scope.row.name }}</template>
+        </el-table-column>
+        <el-table-column
+            prop="name"
+            label="商品信息"
+            min-width="27%"
+            show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column prop="price" label="单价" min-width="8%">
+          <template #default="scope">
+            {{ scope.row.price.toFixed(2) }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="textbookNum" label="数量" min-width="12%">
+          <template #default="scope">
+            <el-input-number
+                @change="changeNum(scope.$index)"
+                size="mini"
+                v-model="scope.row.textbookNum"
+                :min="1"
+                label="描述文字"
+            ></el-input-number>
+          </template>
+        </el-table-column>
+        <el-table-column label="金额" min-width="11%">
+          <template #default="scope">
+            {{ (scope.row.price * scope.row.textbookNum).toFixed(2) }}
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" min-width="11%">
+          <template #default="scope">
+            <el-button type="danger" @click="removeShoppingCart(scope.row.userId,scope.row.textbookId)">
+              移除购物车
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "ShoppingCartView",
   data: function () {
     return {
+      totalTextbookNum:0,
       totalPrice: 0,
-      selNum: 0,
-      tableData: [
-        {
-          id: 1,
-          date: '1',
-          price: 1,
-          num: '1',
-          selected: 0
-        },
-        {
-          id: 2,
-          date: '1',
-          price: 1,
-          num: '1',
-          selected: 0
-        },
-        {
-          id: 3,
-          date: '1',
-          price: 1,
-          num: '1',
-          selected: 0
-        },
-      ],
+      selectedNum: 0,
+      shoppingCartEntries: [],
+      key: "",
     };
   },
-  watch: {},
+  watch: {
+    totalTextbookNum: function () {
+      // location.reload();
+      this.load()
+    }
+  },
   methods: {
+    search() {
+      axios.get("/shopping/search", {
+        params: {
+          "key": this.key,
+        }
+      }).then((response) => {
+        this.shoppingCartEntries=response.data
+      }).catch((error) => {
+        this.$message.error(error.response.data)
+      })
+    },
+    load() {
+      axios.post("/shopping/show", {
+        userId: this.$root.loginStatus.userId
+      }).then((response) => {
+        this.shoppingCartEntries = response.data
+      }).catch((error) => {
+        this.$message.error(error.response.data)
+      })
+    },
+    changeNum(index) {
+      axios.post("/shopping/update", {
+        userId: this.shoppingCartEntries[index].userId,
+        textbookId: this.shoppingCartEntries[index].textbookId,
+        textbookNum: this.shoppingCartEntries[index].textbookNum
+      }).then((response) => {
+        this.totalTextbookNum=response.data.length;
+        this.$message.success("修改成功")
+      }).catch((error) => {
+        this.$message.error(error.response.data)
+      })
+    },
+    removeShoppingCart(userId, textbookId) {
+      axios.post("/shopping/remove", {
+        userId: userId,
+        textbookId: textbookId
+      }).then(() => {
+        this.totalTextbookNum=this.totalTextbookNum-1;
+        this.$message.success("移除成功")
+      }).catch((error) => {
+        this.$message.error(error.response.data)
+      })
+    },
     handleSelectionChange(val) {
       const ids = [];
-      this.selNum = val.length;
+      this.selectedNum = val.length;
       for (const index in val) {
-        ids.push(val[index].id);
+        ids.push(val[index].textbookId);
       }
-      for (const i in this.tableData) {
-        if (ids.indexOf(this.tableData[i].id) != -1) {
-          this.tableData[i].selected = 1;
+      for (const i in this.shoppingCartEntries) {
+        if (ids.indexOf(this.shoppingCartEntries[i].textbookId) !== -1) {
+          console.log(this.shoppingCartEntries[i].textbookId);
+          this.shoppingCartEntries[i].selected = 1;
         } else {
-          this.tableData[i].selected = 0;
+          this.shoppingCartEntries[i].selected = 0;
         }
       }
     },
@@ -98,9 +146,9 @@ export default {
       const {columns, data} = param;
       const sums = [];
       if (columns.length > 0) {
-        this.totalPrice = this.tableData
+        this.totalPrice = this.shoppingCartEntries
             .filter((item) => item.selected == 1)
-            .map((row) => row.num * row.price)
+            .map((row) => row.textbookNum * row.price)
             .reduce((total, num) => total + num, 0)
             .toFixed(2);
       } else {
@@ -111,19 +159,22 @@ export default {
           sums[index] = "合计";
           return;
         }
-        if (index === 3) {
-          sums[index] = "已选中商品" + this.selNum + "件";
-        }
         if (index === 4) {
-          sums[index] = this.totalPrice + "元";
-          return;
+          sums[index] = "已选中商品" + this.selectedNum + "件";
         }
-        if (index == 6) {
+        if (index === 5) {
+          sums[index] = this.totalPrice + "元";
           return;
         }
       });
       return sums;
     },
+    buy:function (){
+
+    }
+  },
+  mounted() {
+    this.load()
   }
 }
 </script>

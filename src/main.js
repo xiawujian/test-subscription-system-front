@@ -11,7 +11,7 @@ new Vue({
   data: {
     loginStatus: {  // Vue全局变量维护登录状态
       login: null,
-      userid: null,
+      userId: null,
       username: null,
       // role: null
     }

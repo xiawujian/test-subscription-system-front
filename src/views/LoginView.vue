@@ -37,7 +37,7 @@ export default {
         axios.post("/account/login", this.loginForm)
             .then((response) => {
               this.$root.loginStatus.login = true
-              this.$root.loginStatus.userid = response.data.id
+              this.$root.loginStatus.userId = response.data.id
               this.$root.loginStatus.username = this.loginForm.username
               // this.$root.loginStatus.role= response.data.role
               this.$message.success("登录成功")

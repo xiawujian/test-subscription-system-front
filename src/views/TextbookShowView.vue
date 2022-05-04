@@ -6,16 +6,14 @@
           <template #prefix>
           </template>
         </el-input>
-<!--        <el-button type="primary" plain size="medium" style="margin-left: 2%" @click="load()">-->
-<!--          搜索-->
-<!--        </el-button>-->
       </template>
       <el-table
           border
           show-header
           v-el-table-infinite-scroll="load"
-          :data="textBookEntries"
+          :data="textbookEntries"
       >
+        <el-table-column type="index"  min-width="10.5%"></el-table-column>
         <el-table-column prop="name" label="课本名称" min-width="10.5%">
           <template #append="scope">{{ scope.row.name }}</template>
         </el-table-column>
@@ -26,9 +24,21 @@
         >
 <!--          <template #append="scope">{{ scope.row.mess }}</template>-->
         </el-table-column>
-        <el-table-column prop="price" label="单价" min-width="8%">
+        <el-table-column prop="price" label="单价" min-width="3%">
           <template #append="scope">
             {{ scope.row.price.toFixed(2) }}
+          </template>
+        </el-table-column>
+        <el-table-column type="info" label="查看详情" min-width="6%">
+          <el-button>
+            查看详情
+          </el-button>
+        </el-table-column>
+        <el-table-column label="加入购物车" min-width="8%">
+          <template slot-scope="scope">
+            <el-button type="primary" @click="addShoppingCart(scope.$index)">
+              加入购物车
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -48,7 +58,7 @@ export default {
   },
   data: function () {
     return {
-      textBookEntries: [],
+      textbookEntries: [],
       key: "",
     };
   },
@@ -59,10 +69,19 @@ export default {
           "key": this.key,
         }
       }).then((response) => {
-        this.textBookEntries=response.data
+        this.textbookEntries=response.data
       }).catch((error) => {
-        this.loading = false
         this.$message.error(error.response.data)
+      })
+    },
+    addShoppingCart(index) {
+      axios.post("/shopping/add",{
+        userId:this.$root.loginStatus.userId,
+        textbookId:this.textbookEntries[index].id,
+        price:this.textbookEntries[index].price,
+        name:this.textbookEntries[index].name
+      }).then(()=>{
+        this.$message.success("添加成功")
       })
     }
   },

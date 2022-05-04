@@ -62,7 +62,7 @@ export default {
   methods: {
     userInfo: function () {
       axios.post("/account/info", {
-        id: this.$root.loginStatus.userid
+        id: this.$root.loginStatus.userId
         }).then((response) => {
             // this.$message.success("查找成功")
             this.userInf.username = response.data.username;
