@@ -6,7 +6,7 @@
           <template #prefix>
           </template>
         </el-input>
-        <el-button type="primary" style="margin-left: 2%" @click="buy">结算</el-button>
+        <el-button type="primary" style="margin-left: 2%" @click="buy()">结算</el-button>
       </template>
       <el-table
           show-summary
@@ -53,7 +53,7 @@
         <el-table-column label="操作" min-width="11%">
           <template #default="scope">
             <el-button type="danger" @click="removeShoppingCart(scope.row.userId,scope.row.textbookId)">
-              移除购物车
+              <i class="el-icon-delete">  移除购物车</i>
             </el-button>
           </template>
         </el-table-column>
@@ -69,10 +69,11 @@ export default {
   name: "ShoppingCartView",
   data: function () {
     return {
-      totalTextbookNum:0,
+      totalTextbookNum: 0,
       totalPrice: 0,
       selectedNum: 0,
       shoppingCartEntries: [],
+      shoppingOrderEntries: [],
       key: "",
     };
   },
@@ -83,13 +84,32 @@ export default {
     }
   },
   methods: {
+    buy() {
+      for (const i in this.shoppingCartEntries) {
+        if (this.shoppingCartEntries[i].selected === 1) {
+          axios.post("/order/add", {
+            "userId": this.$root.loginStatus.userId,
+            "textbookId": this.shoppingCartEntries[i].textbookId,
+            "textbookNum": this.shoppingCartEntries[i].textbookNum,
+            "name": this.shoppingCartEntries[i].name,
+            "price": this.shoppingCartEntries[i].price,
+            "startTime": new Date(),
+          }).then(() => {
+            this.removeShoppingCart(this.$root.loginStatus.userId,this.shoppingCartEntries[i].textbookId)
+            this.$message.success("结算成功")
+          }).catch((error) => {
+            this.$message.error(error.response.data)
+          })
+        }
+      }
+    },
     search() {
       axios.get("/shopping/search", {
         params: {
           "key": this.key,
         }
       }).then((response) => {
-        this.shoppingCartEntries=response.data
+        this.shoppingCartEntries = response.data
       }).catch((error) => {
         this.$message.error(error.response.data)
       })
@@ -109,7 +129,7 @@ export default {
         textbookId: this.shoppingCartEntries[index].textbookId,
         textbookNum: this.shoppingCartEntries[index].textbookNum
       }).then((response) => {
-        this.totalTextbookNum=response.data.length;
+        this.totalTextbookNum = response.data.length;
         this.$message.success("修改成功")
       }).catch((error) => {
         this.$message.error(error.response.data)
@@ -120,7 +140,7 @@ export default {
         userId: userId,
         textbookId: textbookId
       }).then(() => {
-        this.totalTextbookNum=this.totalTextbookNum-1;
+        this.totalTextbookNum = this.totalTextbookNum - 1;
         this.$message.success("移除成功")
       }).catch((error) => {
         this.$message.error(error.response.data)
@@ -135,6 +155,7 @@ export default {
       for (const i in this.shoppingCartEntries) {
         if (ids.indexOf(this.shoppingCartEntries[i].textbookId) !== -1) {
           console.log(this.shoppingCartEntries[i].textbookId);
+          //this.shoppingOrderEntries.push(this.shoppingCartEntries[i]);
           this.shoppingCartEntries[i].selected = 1;
         } else {
           this.shoppingCartEntries[i].selected = 0;
@@ -145,6 +166,8 @@ export default {
       // eslint-disable-next-line no-unused-vars
       const {columns, data} = param;
       const sums = [];
+      this.shoppingOrderEntries = null;
+      this.index = 0;
       if (columns.length > 0) {
         this.totalPrice = this.shoppingCartEntries
             .filter((item) => item.selected == 1)
@@ -169,9 +192,6 @@ export default {
       });
       return sums;
     },
-    buy:function (){
-
-    }
   },
   mounted() {
     this.load()

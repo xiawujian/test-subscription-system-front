@@ -8,6 +8,7 @@ import ShoppingCartView from "@/views/ShoppingCartView";
 import TextbookShowView from "@/views/TextbookShowView";
 import UserHomeView from "@/views/UserHomeView";
 import axios from "axios";
+import ShoppingOrderView from "@/views/ShoppingOrderView";
 
 Vue.use(VueRouter)
 
@@ -42,10 +43,15 @@ const routes = [
                 component: TextbookShowView
             },
             {
+                path: 'order',
+                name: 'order',
+                component: ShoppingOrderView
+            },
+            {
                 path: 'profile',
                 name: 'profile',
                 component: UserProfileView
-            }
+            },
         ]
     }
 ]

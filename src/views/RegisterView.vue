@@ -16,6 +16,9 @@
         <el-form-item label="确认密码" prop="checkPass" style="width: 50%;text-align: center">
           <el-input type="password" v-model="registerForm.checkPass" autocomplete="off"></el-input>
         </el-form-item>
+        <el-form-item label="邮箱" prop="email" style="width: 50%;text-align: center">
+          <el-input v-model="registerForm.email" autocomplete="off"></el-input>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" size="medium" @click="submit">注册</el-button>
           <el-button size="medium" v-on:click="goto('/')">返回</el-button>
@@ -45,7 +48,8 @@ export default {
         username: '',
         // id: '',
         password: '',
-        checkPass: ''
+        checkPass: '',
+        email:''
       },
       rules: {
         username: [
@@ -55,15 +59,10 @@ export default {
             trigger: 'blur'
           },
         ],
-        // id: [
-        //   {
-        //     required: true,
-        //     message: '请输入您的学号',
-        //   }
-        // ],
         password: [
           {
             required: true,
+            message: '请输入您的密码',
             trigger: 'blur'
           }
         ],
@@ -71,6 +70,13 @@ export default {
           {
             required: true,
             validator: validateCheckPassword,
+            trigger: 'blur'
+          }
+        ],
+        email:[
+          {
+            required: true,
+            message: '请输入您的邮箱',
             trigger: 'blur'
           }
         ]
