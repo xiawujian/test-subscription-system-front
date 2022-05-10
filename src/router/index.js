@@ -9,12 +9,19 @@ import TextbookShowView from "@/views/TextbookShowView";
 import UserHomeView from "@/views/UserHomeView";
 import axios from "axios";
 import ShoppingOrderView from "@/views/ShoppingOrderView";
+import TeacherHomeView from "@/views/TeacherHomeView";
+import AdminHomeView from "@/views/AdminHomeView";
+import TextbookEditView from "@/views/TextbookEditView";
 
 Vue.use(VueRouter)
 
 const routes = [
     {
         path: '/',
+        redirect: 'login'
+    },
+    {
+        path: '/login',
         name: 'login',
         component: LoginView
     },
@@ -28,29 +35,60 @@ const routes = [
         component: HomeView,
         children: [
             {
-                path: '',
+                path: 'student',
                 name: 'user',
-                component: UserHomeView
+                component: UserHomeView,
             },
             {
-                path: 'cart',
+                path: 'student/cart',
                 name: 'cart',
                 component: ShoppingCartView
             },
             {
-                path: 'textbook',
+                path: 'student/textbook',
                 name: 'textbook',
                 component: TextbookShowView
             },
             {
-                path: 'order',
+                path: 'student/order',
                 name: 'order',
                 component: ShoppingOrderView
             },
             {
-                path: 'profile',
+                path: 'student/profile',
                 name: 'profile',
                 component: UserProfileView
+            },
+
+            {
+                path: 'teacher',
+                name: 'teacher',
+                component: TeacherHomeView,
+            },
+            // {
+            //     path: '',
+            //     component: TeacherHomeView,
+            // },
+            {
+                path: 'teacher/search',
+                component: TextbookShowView
+            },
+            {
+                path: 'teacher/edit',
+                component: TextbookEditView
+            },
+            {
+                path: 'teacher/my',
+                component: TextbookEditView
+            },
+            {
+                path: 'admin',
+                name: 'admin',
+                component: AdminHomeView,
+                // {
+                //     path: '',
+                //     component: AdminHomeView,
+                // },
             },
         ]
     }
@@ -70,7 +108,7 @@ router.beforeEach((to, from, next) => {
             } else {
                 if (to.path === "/" || to.path === "/login" || to.path === "/register" || to.path === "/home") {
                     next();
-                }else {
+                } else {
                     router.app.$message.error("请先登录后查看")
                     next(false)
                 }

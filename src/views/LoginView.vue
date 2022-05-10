@@ -41,7 +41,13 @@ export default {
               this.$root.loginStatus.username = this.loginForm.username
               this.$root.loginStatus.role= response.data.role
               this.$message.success("登录成功")
-              this.$router.push("/home")
+              if(this.$root.loginStatus.role===0){
+                this.$router.push("/home/student")
+              }else if(this.$root.loginStatus.role===1){
+                this.$router.push("/home/teacher")
+              }else{
+                this.$router.push("/home/admin")
+              }
             })
             .catch((error) => {
               this.$message.error(error.response.data)
