@@ -13,7 +13,7 @@
           v-el-table-infinite-scroll="load"
           :data="textbookEntries"
       >
-        <el-table-column type="index"  min-width="10.5%"></el-table-column>
+        <el-table-column type="index" min-width="10.5%"></el-table-column>
         <el-table-column prop="name" label="课本名称" min-width="10.5%">
           <template #append="scope">{{ scope.row.name }}</template>
         </el-table-column>
@@ -22,7 +22,7 @@
             label="商品信息"
             min-width="27%"
         >
-<!--          <template #append="scope">{{ scope.row.mess }}</template>-->
+          <!--          <template #append="scope">{{ scope.row.mess }}</template>-->
         </el-table-column>
         <el-table-column prop="price" label="单价" min-width="3%">
           <template #append="scope">
@@ -30,11 +30,15 @@
           </template>
         </el-table-column>
         <el-table-column type="info" label="查看详情" min-width="6%">
-          <el-button>
-            查看详情
-          </el-button>
+          <template #default="scope">
+            <el-button>
+              <router-link class="el-link el-link--primary" :to="'/home/detail/'+scope.row.id">
+                查看详情
+              </router-link>
+            </el-button>
+          </template>
         </el-table-column>
-        <el-table-column label="加入购物车" min-width="8%">
+        <el-table-column v-if="this.$root.loginStatus.role===0" label="加入购物车" min-width="8%">
           <template slot-scope="scope">
             <el-button type="primary" @click="addShoppingCart(scope.$index)">
               加入购物车
@@ -63,24 +67,28 @@ export default {
     };
   },
   methods: {
+    goto(path) {
+      if (path !== this.currentPath)
+        this.$router.push(path)
+    },
     load() {
       axios.get("/textbook/search", {
         params: {
           "key": this.key,
         }
       }).then((response) => {
-        this.textbookEntries=response.data
+        this.textbookEntries = response.data
       }).catch((error) => {
         this.$message.error(error.response.data)
       })
     },
     addShoppingCart(index) {
-      axios.post("/shopping/add",{
-        userId:this.$root.loginStatus.userId,
-        textbookId:this.textbookEntries[index].id,
-        price:this.textbookEntries[index].price,
-        name:this.textbookEntries[index].name
-      }).then(()=>{
+      axios.post("/shopping/add", {
+        userId: this.$root.loginStatus.userId,
+        textbookId: this.textbookEntries[index].id,
+        price: this.textbookEntries[index].price,
+        name: this.textbookEntries[index].name
+      }).then(() => {
         this.$message.success("添加成功")
       })
     }

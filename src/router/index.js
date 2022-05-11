@@ -12,6 +12,8 @@ import ShoppingOrderView from "@/views/ShoppingOrderView";
 import TeacherHomeView from "@/views/TeacherHomeView";
 import AdminHomeView from "@/views/AdminHomeView";
 import TextbookEditView from "@/views/TextbookEditView";
+import TextbookDetailView from "@/views/TextbookDetailView";
+import TeacherTextbookView from "@/views/TeacherTextbookView";
 
 Vue.use(VueRouter)
 
@@ -79,7 +81,7 @@ const routes = [
             },
             {
                 path: 'teacher/my',
-                component: TextbookEditView
+                component: TeacherTextbookView
             },
             {
                 path: 'admin',
@@ -90,6 +92,10 @@ const routes = [
                 //     component: AdminHomeView,
                 // },
             },
+            {
+                path:'detail/:textbookId',
+                component: TextbookDetailView
+            }
         ]
     }
 ]
