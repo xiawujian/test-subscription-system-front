@@ -3,7 +3,7 @@
     <el-card style="height: 100%">
       <el-descriptions class="margin-top" title="用户个人信息" :column="3" border>
         <template slot="extra">
-          <el-button type="primary" size="small">操作</el-button>
+          <el-button type="primary" size="small">修改</el-button>
         </template>
         <el-descriptions-item>
           <template slot="label">
@@ -15,16 +15,16 @@
         <el-descriptions-item>
           <template slot="label">
             <i class="el-icon-mobile-phone"></i>
-            手机号
+            密码
           </template>
-          18100000000
+          *************
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
             <i class="el-icon-mobile-phone"></i>
-            手机号
+            邮箱
           </template>
-          18100000000
+          test@test.com
         </el-descriptions-item>
       </el-descriptions>
     </el-card>

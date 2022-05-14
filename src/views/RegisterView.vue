@@ -1,8 +1,8 @@
 <template>
-  <div style="width: 50%;margin: 160px auto;">
+  <div style="width: 500px;margin: 160px auto;">
     <el-card style="margin: 160px auto;">
       <el-form :model="registerForm" :rules="rules" ref="registerForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="姓名" prop="username" style="width: 35%;text-align: center">
+        <el-form-item label="用户名" prop="username" style="width: 35%;text-align: center">
           <el-input v-model="registerForm.username"></el-input>
         </el-form-item>
 <!--        <el-form-item label="专业" prop="major">-->

@@ -54,7 +54,7 @@
 import axios from "axios";
 
 export default {
-  name: "ShoppingOrderView",
+  name: "OrderManageView",
   data: function () {
     return {
       shoppingOrderEntries: [],
@@ -67,15 +67,6 @@ export default {
         params: {
           "key": this.key,
         }
-      }).then((response) => {
-        this.shoppingOrderEntries = response.data
-      }).catch((error) => {
-        this.$message.error(error.response.data)
-      })
-    },
-    load() {
-      axios.post("/order/show", {
-        userId: this.$root.loginStatus.userId
       }).then((response) => {
         this.shoppingOrderEntries = response.data
         for (const i in this.shoppingOrderEntries) {
@@ -93,7 +84,7 @@ export default {
     },
   },
   mounted() {
-    this.load()
+    this.search()
   }
 }
 </script>

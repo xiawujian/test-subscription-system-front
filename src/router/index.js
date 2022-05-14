@@ -14,6 +14,9 @@ import AdminHomeView from "@/views/AdminHomeView";
 import TextbookEditView from "@/views/TextbookEditView";
 import TextbookDetailView from "@/views/TextbookDetailView";
 import TeacherTextbookView from "@/views/TeacherTextbookView";
+import AccountManageView from "@/views/AccountManageView";
+import TextbookManageView from "@/views/TextbookManageView";
+import OrderManageView from "@/views/OrderManageView";
 
 Vue.use(VueRouter)
 
@@ -87,10 +90,18 @@ const routes = [
                 path: 'admin',
                 name: 'admin',
                 component: AdminHomeView,
-                // {
-                //     path: '',
-                //     component: AdminHomeView,
-                // },
+            },
+            {
+                path: 'admin/account',
+                component: AccountManageView,
+            },
+            {
+                path: 'admin/textbook',
+                component: TextbookManageView,
+            },
+            {
+                path: 'admin/order',
+                component: OrderManageView,
             },
             {
                 path:'detail/:textbookId',

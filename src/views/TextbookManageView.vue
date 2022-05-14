@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-card>
-      <!--      <template #header>-->
-      <!--        <el-input v-model="key" placeholder="请输入教材名称" clearable style="width: 250px" maxlength="40" @input="load">-->
-      <!--          <template #prefix>-->
-      <!--          </template>-->
-      <!--        </el-input>-->
-      <!--      </template>-->
+            <template #header>
+              <el-input v-model="key" placeholder="请输入教材名称" clearable style="width: 250px" maxlength="40" @input="load">
+                <template #prefix>
+                </template>
+              </el-input>
+            </template>
       <el-table
           border
           show-header
@@ -41,7 +41,7 @@
         <el-table-column label="操作" min-width="11%">
           <template #default="scope">
             <el-button type="danger" @click="removeTextbook(scope.row.textbookId)">
-              <i class="el-icon-delete"> 移除教材</i>
+              <i class="el-icon-delete">  移除教材</i>
             </el-button>
           </template>
         </el-table-column>
@@ -51,21 +51,31 @@
 </template>
 
 <script>
+import elTableInfiniteScroll from "el-table-infinite-scroll";
 import axios from "axios";
 
 export default {
-  name: "TeacherTextbookView",
+  name: "TextbookManageView",
+  directives: {
+    'el-table-infinite-scroll': elTableInfiniteScroll,
+  },
   data: function () {
     return {
       textbookEntries: [],
+      key: "",
     };
   },
   methods: {
+    goto(path) {
+      if (path !== this.currentPath)
+        this.$router.push(path)
+    },
     load() {
-      axios.post("/textbook/my", {
-        teacherId: this.$root.loginStatus.userId
+      axios.get("/textbook/search", {
+        params: {
+          "key": this.key,
+        }
       }).then((response) => {
-        console.log(this.$root.loginStatus.userId)
         this.textbookEntries = response.data
       }).catch((error) => {
         this.$message.error(error.response.data)
