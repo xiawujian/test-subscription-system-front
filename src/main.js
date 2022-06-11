@@ -6,9 +6,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 import elTableInfiniteScroll from "el-table-infinite-scroll";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import {faUser} from "@fortawesome/free-solid-svg-icons";
+import {faAt, faBook, faHouse, faReceipt, faUser} from "@fortawesome/free-solid-svg-icons";
 
-library.add(faUser)
+library.add(faUser, faBook,faHouse,faReceipt,faAt)
 
 Vue.config.productionTip = false
 Vue.component('font-awesome-icon', FontAwesomeIcon)

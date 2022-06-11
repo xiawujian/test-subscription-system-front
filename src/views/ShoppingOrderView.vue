@@ -16,6 +16,7 @@
           v-el-table-infinite-scroll="load"
           tooltip-effect="dark"
           style="width: 100%"
+          v-load="loading"
       >
         <el-table-column sortable prop="id" label="订单编号" min-width="10.5%">
           <template #default="scope">
@@ -59,21 +60,27 @@ export default {
     return {
       shoppingOrderEntries: [],
       key: "",
+      loading:true,
     };
   },
   methods: {
     search() {
+      this.loading=true
       axios.get("/order/search", {
         params: {
           "key": this.key,
         }
       }).then((response) => {
         this.shoppingOrderEntries = response.data
+        setTimeout(()=>{
+          this.loading=false
+        },500)
       }).catch((error) => {
         this.$message.error(error.response.data)
       })
     },
     load() {
+      this.loading=true
       axios.post("/order/show", {
         userId: this.$root.loginStatus.userId
       }).then((response) => {
@@ -87,6 +94,9 @@ export default {
             this.shoppingOrderEntries[i].status = "已结束"
           }
         }
+        setTimeout(()=>{
+          this.loading=false
+        },500)
       }).catch((error) => {
         this.$message.error(error.response.data)
       })

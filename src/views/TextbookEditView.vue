@@ -6,10 +6,10 @@
           <el-input v-model="creatForm.name"></el-input>
         </el-form-item>
         <el-form-item label="单价" prop="price" style="width: 15%;text-align: center">
-          <el-input type="password" v-model="creatForm.price" autocomplete="off"></el-input>
+          <el-input v-model="creatForm.price" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="作者" prop="authorName" style="width: 20%;text-align: center">
-          <el-input type="password" v-model="creatForm.authorName" autocomplete="off"></el-input>
+          <el-input v-model="creatForm.authorName" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="出版社" prop="publisher" style="width: 20%;text-align: center">
           <el-input v-model="creatForm.publisher" autocomplete="off"></el-input>

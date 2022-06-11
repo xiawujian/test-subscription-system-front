@@ -12,6 +12,7 @@
           show-header
           v-el-table-infinite-scroll="load"
           :data="textbookEntries"
+          v-loading="loading"
       >
         <el-table-column type="index" min-width="10.5%"></el-table-column>
         <el-table-column prop="name" label="课本名称" min-width="10.5%">
@@ -32,7 +33,7 @@
         <el-table-column type="info" label="查看详情" min-width="6%">
           <template #default="scope">
             <el-button>
-              <router-link class="el-link el-link--primary" :to="'/home/detail/'+scope.row.id">
+              <router-link class="el-link el-link--primary" :to="'/home/detail/textbook/'+scope.row.id">
                 查看详情
               </router-link>
             </el-button>
@@ -63,6 +64,7 @@ export default {
     return {
       textbookEntries: [],
       key: "",
+      loading:true
     };
   },
   methods: {
@@ -71,12 +73,16 @@ export default {
         this.$router.push(path)
     },
     load() {
+      this.loading=true
       axios.get("/textbook/search", {
         params: {
           "key": this.key,
         }
       }).then((response) => {
         this.textbookEntries = response.data
+        setTimeout(() => {
+          this.loading=false
+        }, 500);
       }).catch((error) => {
         this.$message.error(error.response.data)
       })

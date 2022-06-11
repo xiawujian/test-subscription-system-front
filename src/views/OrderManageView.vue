@@ -14,6 +14,7 @@
           border
           show-header
           v-el-table-infinite-scroll="load"
+          v-loading="loading"
           tooltip-effect="dark"
           style="width: 100%"
       >
@@ -59,16 +60,21 @@ export default {
     return {
       shoppingOrderEntries: [],
       key: "",
+      loading: true
     };
   },
   methods: {
     search() {
+      this.loading=true
       axios.get("/order/search", {
         params: {
           "key": this.key,
         }
       }).then((response) => {
         this.shoppingOrderEntries = response.data
+        setTimeout(() => {
+          this.loading=false
+        }, 500);
         for (const i in this.shoppingOrderEntries) {
           if (this.shoppingOrderEntries[i].orderStatus === 0) {
             this.shoppingOrderEntries[i].status = "未受理"

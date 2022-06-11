@@ -6,17 +6,15 @@ import HomeView from "@/views/HomeView";
 import UserProfileView from "@/views/UserProfileView";
 import ShoppingCartView from "@/views/ShoppingCartView";
 import TextbookShowView from "@/views/TextbookShowView";
-import UserHomeView from "@/views/UserHomeView";
 import axios from "axios";
 import ShoppingOrderView from "@/views/ShoppingOrderView";
-import TeacherHomeView from "@/views/TeacherHomeView";
-import AdminHomeView from "@/views/AdminHomeView";
 import TextbookEditView from "@/views/TextbookEditView";
 import TextbookDetailView from "@/views/TextbookDetailView";
 import TeacherTextbookView from "@/views/TeacherTextbookView";
 import AccountManageView from "@/views/AccountManageView";
 import TextbookManageView from "@/views/TextbookManageView";
 import OrderManageView from "@/views/OrderManageView";
+import AccountDetailView from "@/views/AccountDetailView";
 
 Vue.use(VueRouter)
 
@@ -42,7 +40,8 @@ const routes = [
             {
                 path: 'student',
                 name: 'user',
-                component: UserHomeView,
+                component: TextbookShowView
+                // component: UserHomeView,
             },
             {
                 path: 'student/cart',
@@ -68,7 +67,8 @@ const routes = [
             {
                 path: 'teacher',
                 name: 'teacher',
-                component: TeacherHomeView,
+                component: TextbookShowView
+                // component: TeacherHomeView,
             },
             // {
             //     path: '',
@@ -89,7 +89,8 @@ const routes = [
             {
                 path: 'admin',
                 name: 'admin',
-                component: AdminHomeView,
+                component: AccountManageView,
+                // component: AdminHomeView,
             },
             {
                 path: 'admin/account',
@@ -104,8 +105,12 @@ const routes = [
                 component: OrderManageView,
             },
             {
-                path:'detail/:textbookId',
+                path:'detail/textbook/:textbookId',
                 component: TextbookDetailView
+            },
+            {
+                path:'detail/account/:accountId',
+                component: AccountDetailView
             }
         ]
     }

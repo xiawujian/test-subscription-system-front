@@ -11,6 +11,7 @@
           border
           show-header
           v-el-table-infinite-scroll="load"
+          v-loading="loading"
           :data="accountEntries"
       >
         <el-table-column prop="id" label="用户id" min-width="10.5%">
@@ -22,7 +23,7 @@
         <el-table-column type="info" label="查看详情" min-width="6%">
           <template #default="scope">
             <el-button>
-              <router-link class="el-link el-link--primary" :to="'/home/detail/'+scope.row.id">
+              <router-link class="el-link el-link--primary" :to="'/home/detail/account/'+scope.row.id">
                 查看详情
               </router-link>
             </el-button>
@@ -49,6 +50,7 @@ export default {
     return {
       accountEntries: [],
       key: "",
+      loading:true
     };
   },
   methods: {
@@ -57,12 +59,16 @@ export default {
         this.$router.push(path)
     },
     load() {
+      this.loading=true
       axios.get("/account/search", {
         params: {
           "key": this.key,
         }
       }).then((response) => {
         this.accountEntries = response.data
+        setTimeout(() => {
+          this.loading=false
+        }, 500);
       }).catch((error) => {
         this.$message.error(error.response.data)
       })

@@ -17,6 +17,7 @@
           style="width: 100%"
           :summary-method="getSummaries"
           @selection-change="handleSelectionChange"
+          v-loading="loading"
       >
         <el-table-column type="selection" min-width="8.5%"></el-table-column>
         <el-table-column label="课本名称" min-width="10.5%">
@@ -75,6 +76,7 @@ export default {
       shoppingCartEntries: [],
       shoppingOrderEntries: [],
       key: "",
+      loading:true,
     };
   },
   watch: {
@@ -104,21 +106,29 @@ export default {
       }
     },
     search() {
+      this.loading=true
       axios.get("/shopping/search", {
         params: {
           "key": this.key,
         }
       }).then((response) => {
         this.shoppingCartEntries = response.data
+        setTimeout(()=>{
+          this.loading=false
+        },500)
       }).catch((error) => {
         this.$message.error(error.response.data)
       })
     },
     load() {
+      this.loading=true
       axios.post("/shopping/show", {
         userId: this.$root.loginStatus.userId
       }).then((response) => {
         this.shoppingCartEntries = response.data
+        setTimeout(()=>{
+          this.loading=false
+        },500)
       }).catch((error) => {
         this.$message.error(error.response.data)
       })
