@@ -8,9 +8,9 @@
           </el-menu-item>
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-notebook-1"></i>教材征订</template>
-            <el-menu-item v-on:click="goto('/home/student/textbook')">购买教材</el-menu-item>
-            <el-menu-item v-on:click="goto('/home/student/cart')">购物车</el-menu-item>
-            <el-menu-item v-on:click="goto('/home/student/order')">订单查询</el-menu-item>
+            <el-menu-item class="el-icon-goods" v-on:click="goto('/home/student/textbook')">购买教材</el-menu-item>
+            <el-menu-item class="el-icon-shopping-cart-full" v-on:click="goto('/home/student/cart')">购物车</el-menu-item>
+            <el-menu-item class="el-icon-tickets" v-on:click="goto('/home/student/order')">订单查询</el-menu-item>
           </el-submenu>
           <el-menu-item v-on:click="goto('/home/student/profile')">
             <template slot="title"><i class="el-icon-setting"></i>个人信息</template>
@@ -22,9 +22,9 @@
           </el-menu-item>
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-notebook-1"></i>教材</template>
-            <el-menu-item v-on:click="goto('/home/teacher/search')">查看教材</el-menu-item>
-            <el-menu-item v-on:click="goto('/home/teacher/edit')">创建教材</el-menu-item>
-            <el-menu-item v-on:click="goto('/home/teacher/my')">我的教材</el-menu-item>
+            <el-menu-item class="el-icon-goods" v-on:click="goto('/home/teacher/search')">查看教材</el-menu-item>
+            <el-menu-item class="el-icon-goods" v-on:click="goto('/home/teacher/edit')">创建教材</el-menu-item>
+            <el-menu-item class="el-icon-goods" v-on:click="goto('/home/teacher/my')">我的教材</el-menu-item>
           </el-submenu>
           <el-menu-item v-on:click="goto('/home/teacher/profile')">
             <template slot="title"><i class="el-icon-setting"></i>个人信息</template>
@@ -36,9 +36,9 @@
           </el-menu-item>
                   <el-submenu index="1">
                     <template slot="title"><i class="el-icon-notebook-1"></i>管理页面</template>
-                    <el-menu-item v-on:click="goto('/home/admin/account')">用户管理</el-menu-item>
-                    <el-menu-item v-on:click="goto('/home/admin/textbook')">教材管理</el-menu-item>
-                    <el-menu-item v-on:click="goto('/home/admin/order')">订单管理</el-menu-item>
+                    <el-menu-item class="el-icon-user" v-on:click="goto('/home/admin/account')">用户管理</el-menu-item>
+                    <el-menu-item class="el-icon-goods" v-on:click="goto('/home/admin/textbook')">教材管理</el-menu-item>
+                    <el-menu-item class="el-icon-tickets" v-on:click="goto('/home/admin/order')">订单管理</el-menu-item>
                   </el-submenu>
           <el-menu-item v-on:click="goto('/tss/admin/profile')">
             <template slot="title"><i class="el-icon-setting"></i>个人信息</template>

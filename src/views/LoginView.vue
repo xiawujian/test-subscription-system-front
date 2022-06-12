@@ -1,12 +1,12 @@
 <template>
   <div class="login-container">
-    <el-form ref="form" :model="loginForm" label-width="80px" class="login-form">
+    <el-form ref="form" :model="loginForm" label-width="80px" class="login-form" status-icon hide-required-asterisk>
       <h2 class="login-title" style="text-align: center">高校教材征订系统</h2>
-      <el-form-item label="用户名" style="width: 100%">
-        <el-input v-model="loginForm.username"></el-input>
+      <el-form-item label="用户名"  style="width: 100%">
+        <el-input type="text" prefix-icon="el-icon-user" placeholder="请输入用户名" v-model="loginForm.username"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password" style="width: 100%">
-        <el-input type="password" v-model="loginForm.password"></el-input>
+        <el-input type="password" prefix-icon="el-icon-lock" placeholder="请输入密码" v-model="loginForm.password"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="login">登录</el-button>

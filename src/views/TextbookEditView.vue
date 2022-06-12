@@ -2,21 +2,21 @@
   <div>
     <el-card>
       <el-form :model="creatForm" :rules="rules" ref="registerForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="书名" prop="name" style="width: 20%;text-align: center">
-          <el-input v-model="creatForm.name"></el-input>
+        <el-form-item label="书名" prop="name" style="width: 30%;text-align: center">
+          <el-input type="text" prefix-icon="el-icon-reading" placeholder="请输入书名" v-model="creatForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="单价" prop="price" style="width: 15%;text-align: center">
-          <el-input v-model="creatForm.price" autocomplete="off"></el-input>
+        <el-form-item label="单价" prop="price" style="width: 30%;text-align: center">
+          <el-input type="price" prefix-icon="el-icon-coin" placeholder="请输入单价" v-model="creatForm.price" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="作者" prop="authorName" style="width: 20%;text-align: center">
-          <el-input v-model="creatForm.authorName" autocomplete="off"></el-input>
+        <el-form-item label="作者" prop="authorName" style="width: 30%;text-align: center">
+          <el-input type="text" prefix-icon="el-icon-user" placeholder="请输入作者名" v-model="creatForm.authorName" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="出版社" prop="publisher" style="width: 20%;text-align: center">
-          <el-input v-model="creatForm.publisher" autocomplete="off"></el-input>
+        <el-form-item label="出版社" prop="publisher" style="width: 30%;text-align: center">
+          <el-input type="text" prefix-icon="el-icon-house" placeholder="请输入出版社" v-model="creatForm.publisher" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" size="medium" @click="submit">创建</el-button>
-          <el-button size="medium" >返回</el-button>
+<!--          <el-button size="medium" >返回</el-button>-->
         </el-form-item>
       </el-form>
     </el-card>

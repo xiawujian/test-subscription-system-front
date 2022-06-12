@@ -4,6 +4,7 @@
             <template #header>
               <el-input v-model="key" placeholder="请输入教材名称" clearable style="width: 250px" maxlength="40" @input="load">
                 <template #prefix>
+                  <font-awesome-icon style="margin-top: 12px" icon="fa-solid fa-magnifying-glass" />
                 </template>
               </el-input>
             </template>
