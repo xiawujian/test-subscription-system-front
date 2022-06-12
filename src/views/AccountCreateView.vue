@@ -8,25 +8,39 @@
       </template>
       <el-form :model="registerForm" :rules="rules" ref="registerForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label=" 用  户  名 " prop="username" style="width:80%;text-align: center">
-          <el-input type="text" prefix-icon="el-icon-user" placeholder="请输入用户名" v-model="registerForm.username"></el-input>
+          <el-input type="text" prefix-icon="el-icon-user" placeholder="请输入用户名"
+                    v-model="registerForm.username"></el-input>
         </el-form-item>
-<!--        <el-form-item label="专业" prop="major">-->
-<!--          <el-select v-model="registerForm.major" placeholder="请选择您的专业">-->
-<!--            <el-option v-for="maj in this.numbers" v-bind:key="maj" :label="maj" :value="maj"></el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item label="专业" prop="major">-->
+        <!--          <el-select v-model="registerForm.major" placeholder="请选择您的专业">-->
+        <!--            <el-option v-for="maj in this.numbers" v-bind:key="maj" :label="maj" :value="maj"></el-option>-->
+        <!--          </el-select>-->
+        <!--        </el-form-item>-->
         <el-form-item label="  密  码  " prop="password" style="width:80%;text-align: center">
-          <el-input type="password" prefix-icon="el-icon-lock" placeholder="请输入密码" v-model="registerForm.password" autocomplete="off"></el-input>
+          <el-input type="password" prefix-icon="el-icon-lock" placeholder="请输入密码" v-model="registerForm.password"
+                    autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="checkPass" style="width:80%;text-align: center">
-          <el-input type="password" prefix-icon="el-icon-lock" placeholder="请确认密码" v-model="registerForm.checkPass" autocomplete="off"></el-input>
+          <el-input type="password" prefix-icon="el-icon-lock" placeholder="请确认密码" v-model="registerForm.checkPass"
+                    autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="  邮  箱  " prop="email" style="width:80%;text-align: center">
-          <el-input  type="email" prefix-icon="el-icon-takeaway-box" placeholder="请输入邮箱" v-model="registerForm.email" autocomplete="off"></el-input>
+          <el-input type="email" prefix-icon="el-icon-takeaway-box" placeholder="请输入邮箱" v-model="registerForm.email"
+                    autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="  角  色  " prop="role" style="width:40%;text-align: center">
+          <el-select prefix-icon="el-icon-s-check" v-model="registerForm.role" placeholder="请选择">
+            <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" size="medium" @click="submit">注册</el-button>
-          <el-button size="medium" v-on:click="goto('/')">返回</el-button>
+          <el-button type="primary" size="medium" @click="submit">添加</el-button>
+          <el-button size="medium" v-on:click="goto('/home/admin/account')">返回</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -37,7 +51,7 @@
 import axios from "axios";
 
 export default {
-  name: "RegisterView",
+  name: "AccountCreateView",
   data() {
     let validateCheckPassword = (rule, value, callback) => {
       if (value === "") {
@@ -54,9 +68,16 @@ export default {
         // id: '',
         password: "",
         checkPass: "",
-        email:"",
-        role:0,
+        email: "",
+        role: 0,
       },
+      options: [{
+        value: 0,
+        label: '学生'
+      }, {
+        value: 1,
+        label: '教师'
+      }],
       rules: {
         username: [
           {
@@ -79,7 +100,7 @@ export default {
             trigger: 'blur'
           }
         ],
-        email:[
+        email: [
           {
             required: true,
             message: '请输入您的邮箱',
@@ -93,10 +114,10 @@ export default {
   methods: {
     submit: function () {
       axios.post("/account/register", {
-        username:this.registerForm.username,
-        password:this.registerForm.password,
-        email:this.registerForm.email,
-        role:this.registerForm.role
+        username: this.registerForm.username,
+        password: this.registerForm.password,
+        email: this.registerForm.email,
+        role: this.registerForm.role
       })
           .then(() => {
             this.$message.success("注册成功")
@@ -117,11 +138,5 @@ export default {
 </script>
 
 <style scoped>
-.register-form {
-  width: 350px;
-  margin: 160px auto; /* 上下间距160px，左右自动居中*/
-  background-color: rgb(255, 255, 255, 0.8); /* 透明背景色 */
-  padding: 30px;
-  border-radius: 20px; /* 圆角 */
-}
+
 </style>

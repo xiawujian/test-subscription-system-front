@@ -15,6 +15,7 @@ import AccountManageView from "@/views/AccountManageView";
 import TextbookManageView from "@/views/TextbookManageView";
 import OrderManageView from "@/views/OrderManageView";
 import AccountDetailView from "@/views/AccountDetailView";
+import AccountCreateView from "@/views/AccountCreateView";
 
 Vue.use(VueRouter)
 
@@ -87,6 +88,11 @@ const routes = [
                 component: TeacherTextbookView
             },
             {
+                path: 'teacher/profile',
+                name: 'profile',
+                component: UserProfileView
+            },
+            {
                 path: 'admin',
                 name: 'admin',
                 component: AccountManageView,
@@ -97,12 +103,21 @@ const routes = [
                 component: AccountManageView,
             },
             {
+                path: 'admin/account/create',
+                component: AccountCreateView,
+            },
+            {
                 path: 'admin/textbook',
                 component: TextbookManageView,
             },
             {
                 path: 'admin/order',
                 component: OrderManageView,
+            },
+            {
+                path: 'admin/profile',
+                name: 'profile',
+                component: UserProfileView
             },
             {
                 path:'detail/textbook/:textbookId',

@@ -40,7 +40,7 @@
                     <el-menu-item class="el-icon-goods" v-on:click="goto('/home/admin/textbook')">教材管理</el-menu-item>
                     <el-menu-item class="el-icon-tickets" v-on:click="goto('/home/admin/order')">订单管理</el-menu-item>
                   </el-submenu>
-          <el-menu-item v-on:click="goto('/tss/admin/profile')">
+          <el-menu-item v-on:click="goto('/home/admin/profile')">
             <template slot="title"><i class="el-icon-setting"></i>个人信息</template>
           </el-menu-item>
         </el-menu>

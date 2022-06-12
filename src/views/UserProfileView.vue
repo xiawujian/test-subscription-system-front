@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-card style="height: 100%">
-      <el-descriptions class="margin-top" title="用户个人信息" :column="3" border>
+      <el-descriptions class="margin-top" title="用户个人信息" :column="1" style="width: 50%" border>
         <template slot="extra">
-          <el-button type="primary" size="small">修改</el-button>
+
         </template>
         <el-descriptions-item>
           <template slot="label">
@@ -14,19 +14,20 @@
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
-            <i class="el-icon-mobile-phone"></i>
-            密码
+            <i class="el-icon-user-solid"></i>
+            角色
           </template>
-          *************
+          {{userInf.role}}
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
             <i class="el-icon-mobile-phone"></i>
             邮箱
           </template>
-          test@test.com
+          {{userInf.email}}
         </el-descriptions-item>
       </el-descriptions>
+<!--      <el-button style="margin-top: 30px" type="primary" size="small">修改</el-button>-->
     </el-card>
   </div>
 </template>
@@ -41,7 +42,7 @@ export default {
   data() {
     return {
       userInf: {
-        username: ''
+
       },
     }
   },
@@ -51,7 +52,14 @@ export default {
         id: this.$root.loginStatus.userId
         }).then((response) => {
             // this.$message.success("查找成功")
-            this.userInf.username = response.data.username;
+            this.userInf = response.data;
+            if(response.data.role===0){
+              this.userInf.role="学生"
+            }else if(response.data.role===1){
+              this.userInf.role="教师"
+            }else{
+              this.userInf.role="管理员"
+            }
           })
           .catch((error) => {
             this.$message.error(error.response.data)

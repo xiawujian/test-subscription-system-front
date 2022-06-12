@@ -7,6 +7,7 @@
             <font-awesome-icon style="margin-top: 12px" icon="fa-solid fa-magnifying-glass" />
           </template>
         </el-input>
+        <el-button type="primary" style="margin-left: 2%" @click="goto('/home/admin/account/create')">添加用户</el-button>
       </template>
       <el-table
           border
